@@ -1,7 +1,12 @@
+import os
 import streamlit as st
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as goS
+
+# Always resolve paths relative to this file's own folder,
+# regardless of where Streamlit's working directory is.
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # ==================================================
 # PAGE CONFIG
@@ -63,7 +68,7 @@ p{
 
 @st.cache_data
 def load_data():
-    df = pd.read_csv("netflix_cleaned.csv")
+    df = pd.read_csv(os.path.join(BASE_DIR, "netflix_cleaned.csv"))
     df["date_added"] = pd.to_datetime(df["date_added"])
     return df
 
@@ -76,7 +81,7 @@ df = load_data()
 col1,col2 = st.columns([1,5]) #عشان يقسم الصفحه الى نصفين 
 
 with col1:
-    st.image("netflix_logo.png", width=130)
+    st.image(os.path.join(BASE_DIR, "netflix_logo.png"), width=130)
 
 with col2:
     st.title("Netflix Analytics Dashboard")
@@ -88,7 +93,7 @@ st.divider()
 # SIDEBAR
 # ==================================================
 
-st.sidebar.image("netflix_logo.png", width=180)
+st.sidebar.image(os.path.join(BASE_DIR, "netflix_logo.png"), width=180)
 
 st.sidebar.title("Dashboard Filters")
 
